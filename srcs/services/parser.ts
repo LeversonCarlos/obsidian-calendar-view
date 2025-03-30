@@ -18,7 +18,7 @@ export class Parser {
 
 		const item = new ItemModel();
 		item.ID = file.path;
-		item.Title = file.name;
+		item.Title = file.basename;
 		item.Dates = dates;
 		return item;
 	}
