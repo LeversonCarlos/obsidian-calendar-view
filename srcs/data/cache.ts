@@ -73,6 +73,23 @@ export class Cache {
 		return items;
 	}
 
+	public GetByInterval(initialDate: Date | null, finalDate: Date | null): ItemModel[] {
+		if (!initialDate || !finalDate)
+			return [];
+		const initialKey = initialDate.toISOString();
+		const finalKey = finalDate.toISOString();
+		const items: ItemModel[] = [];
+		for (const dateKey in this._CacheByDate) {
+			if (dateKey < initialKey || dateKey > finalKey)
+				continue;
+			const itemCache = this._CacheByDate[dateKey];
+			if (!itemCache)
+				continue;
+			items.push(...Object.values(itemCache));
+		}
+		return items;
+	}
+
 	public Clear(): void {
 		this._CacheByID = {};
 		this._CacheByDate = {};
