@@ -95,6 +95,11 @@ export class Cache {
 		this._CacheByDate = {};
 	}
 
+	public Log(): void {
+		console.log("CacheByID:", this._CacheByID);
+		console.log("CacheByDate:", this._CacheByDate);
+	}
+
 }
 
 type CacheItemType = Record<string, ItemModel>;

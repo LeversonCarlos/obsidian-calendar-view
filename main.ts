@@ -1,4 +1,6 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { Cache } from 'srcs/data';
+import { Injector, Parser } from 'srcs/services';
 
 // Remember to rename these classes and interfaces!
 
@@ -14,12 +16,29 @@ export default class MyPlugin extends Plugin {
 	settings: MyPluginSettings;
 
 	async onload() {
+		Injector.Init(this.app);
 		await this.loadSettings();
 
 		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
-			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
+		const ribbonIconEl = this.addRibbonIcon('dice', 'Calendar View', (evt: MouseEvent) => {
+
+			const markdownFiles = this.app.vault.getMarkdownFiles();
+			new Notice(`markdownFiles: ${markdownFiles.length}`);
+
+			const itens = markdownFiles
+				?.map((file) => Parser.Parse(file))
+				?.filter((item) => item !== null);
+			new Notice(`itens: ${itens?.length}`);
+
+			const cache = Injector.getInstance(Cache)
+			cache.Clear();
+
+			if (itens) {
+				for (const item of itens)
+					cache.Add(item);
+			}
+			cache.Log();
+
 		});
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
