@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, TFile } from 'obsidian';
 import { Cache } from 'srcs/data';
 import { Injector, Parser } from 'srcs/services';
 
@@ -17,7 +17,12 @@ export default class MyPlugin extends Plugin {
 
 	async onload() {
 		Injector.Init(this.app);
+
 		await this.loadSettings();
+
+		Injector
+			?.getInstance(Cache)
+			?.Clear();
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Calendar View', (evt: MouseEvent) => {
@@ -25,21 +30,13 @@ export default class MyPlugin extends Plugin {
 			const markdownFiles = this.app.vault.getMarkdownFiles();
 			new Notice(`markdownFiles: ${markdownFiles.length}`);
 
-			const itens = markdownFiles
-				?.map((file) => Parser.Parse(file))
-				?.filter((item) => item !== null);
-			new Notice(`itens: ${itens?.length}`);
-
-			const cache = Injector.getInstance(Cache)
-			cache.Clear();
-
-			if (itens) {
-				for (const item of itens)
-					cache.Add(item);
+			if (markdownFiles) {
+				for (const item of markdownFiles)
+					this.addCache(item);
 			}
-			cache.Log();
-
+			
 		});
+
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
 
@@ -99,6 +96,27 @@ export default class MyPlugin extends Plugin {
 
 	onunload() {
 
+	}
+
+	private async addCache(file: TFile) {
+		if (!file)
+			return;
+
+		const item = Parser.Parse(file);
+		if (!item)
+			return;
+
+		Injector
+			?.getInstance(Cache)
+			?.Add(item);
+	}
+
+	private async removeCache(file: TFile) {
+		if (!file)
+			return;
+		Injector
+			?.getInstance(Cache)
+			?.Remove(file.path);
 	}
 
 	async loadSettings() {
