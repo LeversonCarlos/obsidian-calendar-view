@@ -51,6 +51,28 @@ export class Cache {
 		delete this._CacheByID[itemCache.ID];
 	}
 
+	public GetByID(id: string | null): ItemModel | null {
+		if (!id)
+			return null;
+		const item = this._CacheByID[id];
+		if (!item)
+			return null;
+		return item;
+	}
+
+	public GetByDate(date: Date | null): ItemModel[] {
+		if (!date)
+			return [];
+		const dateKey = date.toISOString();
+		const itemCache = this._CacheByDate[dateKey];
+		if (!itemCache)
+			return [];
+		const items = Object.values(itemCache);
+		if (!items)
+			return [];
+		return items;
+	}
+
 	public Clear(): void {
 		this._CacheByID = {};
 		this._CacheByDate = {};
