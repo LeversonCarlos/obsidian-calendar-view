@@ -1,4 +1,11 @@
+import { App } from "obsidian";
+
 export class Injector {
+
+	public static Init(app: App) {
+		Injector.instances.set(App.name, app);
+	}
+
 	private static instances: Map<string, any> = new Map();
 
 	public static getInstance<T>(type: { new(): T }): T {
