@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, TFile } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, TAbstractFile, TFile } from 'obsidian';
 import { Cache } from 'srcs/data';
 import { Injector, Parser } from 'srcs/services';
 
@@ -19,22 +19,30 @@ export default class MyPlugin extends Plugin {
 		Injector.Init(this.app);
 
 		await this.loadSettings();
+		await this.loadCache();
 
-		Injector
-			?.getInstance(Cache)
-			?.Clear();
+		this.registerEvent(this.app.vault.on('create', file => {
+			if (file instanceof TFile && file.extension === 'md') {
+				this.addCache(file);
+			}
+		}));
+		this.registerEvent(this.app.vault.on('modify', file => {
+			if (file instanceof TFile && file.extension === 'md') {
+				this.removeCache(file);
+				this.addCache(file);
+			}
+		}));
+		this.registerEvent(this.app.vault.on('delete', file => {
+			if (file instanceof TFile && file.extension === 'md') {
+				this.removeCache(file);
+			}
+		}));
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Calendar View', (evt: MouseEvent) => {
-
-			const markdownFiles = this.app.vault.getMarkdownFiles();
-			new Notice(`markdownFiles: ${markdownFiles.length}`);
-
-			if (markdownFiles) {
-				for (const item of markdownFiles)
-					this.addCache(item);
-			}
-			
+			Injector
+				?.getInstance(Cache)
+				?.Log();
 		});
 
 		// Perform additional things with the ribbon
@@ -98,20 +106,35 @@ export default class MyPlugin extends Plugin {
 
 	}
 
-	private async addCache(file: TFile) {
-		if (!file)
+	private async loadCache() {
+		Injector
+			?.getInstance(Cache)
+			?.Clear();
+
+		const files = this.app.vault.getMarkdownFiles();
+		if (!files || files.length === 0)
 			return;
 
+		for (const item of files)
+			this.addCache(item);
+
+		Injector
+			?.getInstance(Cache)
+			?.Log();
+	}
+
+	private addCache(file: TFile) {
+		if (!file)
+			return;
 		const item = Parser.Parse(file);
 		if (!item)
 			return;
-
 		Injector
 			?.getInstance(Cache)
 			?.Add(item);
 	}
 
-	private async removeCache(file: TFile) {
+	private removeCache(file: TAbstractFile) {
 		if (!file)
 			return;
 		Injector
