@@ -1,6 +1,6 @@
 import { App, Editor, MarkdownView, Modal, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { Cache } from 'srcs/data';
-import { Files, Injector } from 'srcs/services';
+import { Files, Injector, Renderer } from 'srcs/services';
 
 // Remember to rename these classes and interfaces!
 
@@ -24,6 +24,8 @@ export default class MyPlugin extends Plugin {
 		this.registerEvent(this.app.vault.on('create', Files.OnCreate));
 		this.registerEvent(this.app.vault.on('modify', Files.OnModify));
 		this.registerEvent(this.app.vault.on('delete', Files.OnDelete));
+
+		this.registerMarkdownCodeBlockProcessor("calendar-view", Renderer.OnRender);
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Calendar View', (evt: MouseEvent) => {
