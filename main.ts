@@ -1,6 +1,6 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, TAbstractFile, TFile } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { Cache } from 'srcs/data';
-import { Injector, Parser } from 'srcs/services';
+import { Files, Injector } from 'srcs/services';
 
 // Remember to rename these classes and interfaces!
 
@@ -19,24 +19,11 @@ export default class MyPlugin extends Plugin {
 		Injector.Init(this.app);
 
 		await this.loadSettings();
-		await this.loadCache();
+		await Files.LoadFiles();
 
-		this.registerEvent(this.app.vault.on('create', file => {
-			if (file instanceof TFile && file.extension === 'md') {
-				this.addCache(file);
-			}
-		}));
-		this.registerEvent(this.app.vault.on('modify', file => {
-			if (file instanceof TFile && file.extension === 'md') {
-				this.removeCache(file);
-				this.addCache(file);
-			}
-		}));
-		this.registerEvent(this.app.vault.on('delete', file => {
-			if (file instanceof TFile && file.extension === 'md') {
-				this.removeCache(file);
-			}
-		}));
+		this.registerEvent(this.app.vault.on('create', Files.OnCreate));
+		this.registerEvent(this.app.vault.on('modify', Files.OnModify));
+		this.registerEvent(this.app.vault.on('delete', Files.OnDelete));
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Calendar View', (evt: MouseEvent) => {
@@ -104,42 +91,6 @@ export default class MyPlugin extends Plugin {
 
 	onunload() {
 
-	}
-
-	private async loadCache() {
-		Injector
-			?.getInstance(Cache)
-			?.Clear();
-
-		const files = this.app.vault.getMarkdownFiles();
-		if (!files || files.length === 0)
-			return;
-
-		for (const item of files)
-			this.addCache(item);
-
-		Injector
-			?.getInstance(Cache)
-			?.Log();
-	}
-
-	private addCache(file: TFile) {
-		if (!file)
-			return;
-		const item = Parser.Parse(file);
-		if (!item)
-			return;
-		Injector
-			?.getInstance(Cache)
-			?.Add(item);
-	}
-
-	private removeCache(file: TAbstractFile) {
-		if (!file)
-			return;
-		Injector
-			?.getInstance(Cache)
-			?.Remove(file.path);
 	}
 
 	async loadSettings() {
