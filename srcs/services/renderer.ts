@@ -51,12 +51,17 @@ export class Renderer {
 			dayTd.textContent = day.getDate().toString().padStart(2, "0");
 
 			const itemsTd = row.insertCell();
-			const items = itemsList[ItemsData.GetIsoString(day)];
+			const dayIso = ItemsData.GetIsoString(day);
+			const items = itemsList[dayIso];
 			if (items) {
 				const itemsValues = Object.values(items);
 				for (const item of itemsValues) {
 					const itemEl = itemsTd.createEl("div");
 					itemEl.textContent = item.Title;
+					for (const dates of item.Dates) {
+						if (ItemsData.GetIsoString(dates.Date) == dayIso)
+							itemEl.textContent += ` [${dates.Type}]`;
+					}
 				}
 			}
 
