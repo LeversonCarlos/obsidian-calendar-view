@@ -1,5 +1,5 @@
 import { App, Editor, MarkdownView, Modal, Plugin, PluginSettingTab, Setting } from 'obsidian';
-import { Cache } from 'srcs/data';
+import { ItemsData } from 'srcs/data';
 import { Files, Injector, Renderer } from 'srcs/services';
 
 // Remember to rename these classes and interfaces!
@@ -30,7 +30,7 @@ export default class MyPlugin extends Plugin {
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Calendar View', (evt: MouseEvent) => {
 			Injector
-				?.getInstance(Cache)
+				?.getInstance(ItemsData)
 				?.Log();
 		});
 

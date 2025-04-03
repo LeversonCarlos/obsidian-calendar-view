@@ -1,6 +1,6 @@
 import { ItemModel } from "../models";
 
-export class Cache {
+export class ItemsData {
 	private _CacheByID: CacheItemType = {};
 	private _CacheByDate: CacheListType = {};
 

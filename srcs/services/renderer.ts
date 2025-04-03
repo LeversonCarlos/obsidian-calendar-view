@@ -1,6 +1,6 @@
 import { MarkdownPostProcessorContext } from "obsidian";
 import { Injector } from ".";
-import { Cache } from "../data";
+import { ItemsData } from "../data";
 
 export class Renderer {
 
@@ -15,7 +15,7 @@ export class Renderer {
 		headerRow.appendChild(th);
 
 		const items = Injector
-			?.getInstance(Cache)
+			?.getInstance(ItemsData)
 			?.GetByInterval(new Date(Date.parse("2021-01-01")), new Date(Date.parse("2024-12-31")));
 		console.log("items", items);
 
