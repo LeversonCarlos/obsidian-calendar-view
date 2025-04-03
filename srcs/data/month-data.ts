@@ -1,3 +1,6 @@
+import { App, MarkdownView } from "obsidian";
+import { Injector } from "srcs/services";
+
 export class MonthData {
 
 	public constructor() {
@@ -13,18 +16,17 @@ export class MonthData {
 	}
 
 	private Set(val: Date | void | null = null): void {
-		console.log('date1', val);
 		if (!val)
 			val = new Date();
-		console.log('date2', val);
 		val = new Date(val.toString());
-		console.log('date3', val);
+
 		this.Month = {
 			Start: new Date(val.getFullYear(), val.getMonth(), 1, 0, 0, 0, 0),
 			Finish: new Date(val.getFullYear(), val.getMonth() + 1, 0, 23, 59, 59, 999),
 			MonthText: (val.getMonth() + 1).toString().padStart(2, '0'),
 			YearText: val.getFullYear().toString(),
 		};
+		console.log('Month', this.Month);
 	}
 
 	public NextMonth(): void {
@@ -63,6 +65,30 @@ export class MonthData {
 
 		date = new Date(year, month, 1);
 		this.Set(date);
+	}
+
+	public static NextMonthCallack(id: string): void {
+		Injector
+			?.getInstance(MonthData)
+			?.NextMonth();
+		Injector
+			?.getInstance(App)
+			?.workspace
+			?.getActiveViewOfType(MarkdownView)
+			?.previewMode
+			?.rerender(true);
+	}
+
+	public static PreviousMonthCallack(id: string): void {
+		Injector
+			?.getInstance(MonthData)
+			?.PreviousMonth();
+		Injector
+			?.getInstance(App)
+			?.workspace
+			?.getActiveViewOfType(MarkdownView)
+			?.previewMode
+			?.rerender(true);
 	}
 
 }
