@@ -13,6 +13,7 @@ export class Renderer {
 		const headerRow = thead.insertRow();
 
 		const th = document.createElement("th");
+		th.colSpan = 2;
 		const month = Injector
 			?.getInstance(MonthData)
 			?.Get(id);
@@ -34,17 +35,32 @@ export class Renderer {
 
 		headerRow.appendChild(th);
 
-		const items = Injector
+		const itemsList = Injector
 			?.getInstance(ItemsData)
-			?.GetByInterval(month!.Start, month!.Finish);
-		console.log("items", items);
+			?.GetByInterval(month!.Start, month!.Finish)
+			?? {};
+		console.log(itemsList);
 
 		const tbody = table.createTBody();
-		for (const item of items) {
+
+		let day = new Date(month!.Start);
+		while (day <= month!.Finish) {
 			const row = tbody.insertRow();
 
-			const td = row.insertCell();
-			td.textContent = item.Title;
+			const dayTd = row.insertCell();
+			dayTd.textContent = day.getDate().toString().padStart(2, "0");
+
+			const itemsTd = row.insertCell();
+			const items = itemsList[ItemsData.GetIsoString(day)];
+			if (items) {
+				const itemsValues = Object.values(items);
+				for (const item of itemsValues) {
+					const itemEl = itemsTd.createEl("div");
+					itemEl.textContent = item.Title;
+				}
+			}
+
+			day.setDate(day.getDate() + 1);
 		}
 
 		el.appendChild(table);

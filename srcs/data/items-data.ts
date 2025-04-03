@@ -19,7 +19,7 @@ export class ItemsData {
 		this._CacheByID[item.ID] = item;
 
 		for (const date of item.Dates) {
-			const dateKey = date.Date.toISOString();
+			const dateKey = ItemsData.GetIsoString(date.Date);
 			if (!this._CacheByDate[dateKey]) {
 				this._CacheByDate[dateKey] = {};
 			}
@@ -36,7 +36,7 @@ export class ItemsData {
 			return;
 
 		for (const date of itemCache.Dates) {
-			const dateKey = date.Date.toISOString();
+			const dateKey = ItemsData.GetIsoString(date.Date);
 
 			const dateCache = this._CacheByDate[dateKey];
 			if (!dateCache)
@@ -63,7 +63,7 @@ export class ItemsData {
 	public GetByDate(date: Date | null): ItemModel[] {
 		if (!date)
 			return [];
-		const dateKey = date.toISOString();
+		const dateKey = ItemsData.GetIsoString(date);
 		const itemCache = this._CacheByDate[dateKey];
 		if (!itemCache)
 			return [];
@@ -73,21 +73,24 @@ export class ItemsData {
 		return items;
 	}
 
-	public GetByInterval(initialDate: Date | null, finalDate: Date | null): ItemModel[] {
+	public GetByInterval(initialDate: Date | null, finalDate: Date | null): CacheListType | null {
 		if (!initialDate || !finalDate)
-			return [];
-		const initialKey = initialDate.toISOString();
-		const finalKey = finalDate.toISOString();
-		const items: ItemModel[] = [];
+			return null;
+
+		const initialKey = ItemsData.GetIsoString(initialDate);
+		const finalKey = ItemsData.GetIsoString(finalDate);
+		const result: CacheListType = {};
+
 		for (const dateKey in this._CacheByDate) {
 			if (dateKey < initialKey || dateKey > finalKey)
 				continue;
 			const itemCache = this._CacheByDate[dateKey];
-			if (!itemCache)
-				continue;
-			items.push(...Object.values(itemCache));
+			if (itemCache) {
+				result[dateKey] = itemCache;
+			}
 		}
-		return items;
+
+		return result;
 	}
 
 	public Clear(): void {
@@ -98,6 +101,12 @@ export class ItemsData {
 	public Log(): void {
 		console.log("CacheByID:", this._CacheByID);
 		console.log("CacheByDate:", this._CacheByDate);
+	}
+
+	public static GetIsoString(date: Date | null): string  {
+		if (!date)
+			return "";
+		return date.toISOString().substring(0, 10);
 	}
 
 }
