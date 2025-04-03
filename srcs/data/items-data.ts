@@ -12,7 +12,7 @@ export class ItemsData {
 				this.Add_Item(i);
 			return;
 		}
-		this.Add_Item(item);		
+		this.Add_Item(item);
 	}
 
 	private Add_Item(item: ItemModel): void {
@@ -48,7 +48,7 @@ export class ItemsData {
 			}
 		}
 
-		delete this._CacheByID[itemCache.ID];		
+		delete this._CacheByID[itemCache.ID];
 	}
 
 	public GetByID(id: string | null): ItemModel | null {
