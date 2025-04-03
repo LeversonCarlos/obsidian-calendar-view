@@ -5,6 +5,8 @@ import { ItemsData, MonthData } from "../data";
 export class Renderer {
 
 	public static async OnRender(source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext): Promise<any> {
+		const id = ctx.sourcePath;
+
 		const table = document.createElement("table");
 
 		const thead = table.createTHead();
@@ -13,7 +15,7 @@ export class Renderer {
 		const th = document.createElement("th");
 		const month = Injector
 			?.getInstance(MonthData)
-			?.Month;		
+			?.Get(id);
 
 		const prev = th.createEl("button");
 		prev.textContent = "<";
