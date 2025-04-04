@@ -1,6 +1,7 @@
 import { App, FrontMatterCache, TFile } from "obsidian";
 import { DateModel, ItemModel } from "srcs/models";
 import { Injector } from ".";
+import { SettingsModel } from "srcs/settings";
 
 export class Parser {
 
@@ -16,7 +17,10 @@ export class Parser {
 		if (!frontmatter)
 			return null;
 
-		const dates = Parser.GetDates(file, frontmatter);
+		const settings = Injector
+			?.getInstance(SettingsModel);
+
+		const dates = Parser.GetDates(file, frontmatter, settings);
 		if (!dates)
 			return null;
 
@@ -24,7 +28,7 @@ export class Parser {
 		item.ID = file.path;
 		item.Title = file.basename;
 		item.Dates = dates;
-		item.Image = await Parser.GetImage(app, file, frontmatter);
+		item.Image = await Parser.GetImage(app, file, frontmatter, settings);
 		return item;
 	}
 
@@ -43,10 +47,14 @@ export class Parser {
 		return frontmatter;
 	}
 
-	private static GetDates(file: TFile, frontMatter: FrontMatterCache): DateModel[] | null {
+	private static GetDates(file: TFile, frontMatter: FrontMatterCache, settings: SettingsModel): DateModel[] | null {
 		const dates: DateModel[] = [];
 
-		const columnNames = ['Compra', 'Publicação', 'Leitura'];
+		const columnNames = settings
+			?.DatesPropertyName;
+		if (columnNames == null || columnNames.length == 0)
+			return null;
+
 		for (const columnName of columnNames) {
 			const columnDates = Parser.GetDatesForColumn(file, frontMatter, columnName);
 			if (columnDates)
@@ -93,15 +101,17 @@ export class Parser {
 		return [DateModel.Create(columnName, date)];
 	}
 
-	private static async GetImage(app: App, file: TFile, frontMatter: FrontMatterCache): Promise<string | null> {
-		const imageProperty = 'Capa';
-		let imagePath = frontMatter[imageProperty];
+	private static async GetImage(app: App, file: TFile, frontMatter: FrontMatterCache, settings: SettingsModel): Promise<string | null> {
+		const columnName = settings.ImagePropertyName;
+		if (!columnName)
+			return null;
+		let imagePath = frontMatter[columnName];
 		if (imagePath)
 			return imagePath;
 
 		const body = await app.vault.read(file);
 
-		const pattern = new RegExp(`^${imageProperty}::\\s*(.+)$`, 'm');
+		const pattern = new RegExp(`^${columnName}::\\s*(.+)$`, 'm');
 		const match = body.match(pattern);
 
 		imagePath = match ? match[1].trim() : null;
