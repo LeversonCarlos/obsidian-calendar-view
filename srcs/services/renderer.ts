@@ -1,59 +1,117 @@
-import { MarkdownPostProcessorContext } from "obsidian";
+import { App, MarkdownPostProcessorContext } from "obsidian";
 import { Injector } from ".";
 import { ItemsData, MonthData } from "../data";
 
 export class Renderer {
 
 	public static async OnRender(source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext): Promise<any> {
+		Renderer.injectCalendarCSS();
 		const id = ctx.sourcePath;
 
-		const table = document.createElement("table");
+		const month = Injector?.getInstance(MonthData)?.Get(id);
+		const itemsList = Injector?.getInstance(ItemsData)?.GetByInterval(month!.Start, month!.Finish) ?? {};
 
-		const thead = table.createTHead();
-		const headerRow = thead.insertRow();
+		// Wrapper principal com estilo
+		const wrapper = document.createElement("div");
+		wrapper.className = "obsidian-calendar-wrapper";
 
-		const th = document.createElement("th");
-		th.colSpan = 2;
-		const month = Injector
-			?.getInstance(MonthData)
-			?.Get(id);
+		// Navegacao
+		const nav = document.createElement("div");
+		nav.className = "calendar-nav";
 
-		const prev = th.createEl("button");
-		prev.textContent = "<";
+		const prev = document.createElement("button");
+		prev.textContent = "←";
+		prev.className = "calendar-nav-btn";
 		prev.addEventListener("click", () => {
 			MonthData.PreviousMonthCallack(ctx.sourcePath);
 		});
 
-		const title = th.createEl("span");
-		title.textContent = `${month?.MonthText}/${month?.YearText}`;
-
-		const next = th.createEl("button");
-		next.textContent = ">";
+		const next = document.createElement("button");
+		next.textContent = "→";
+		next.className = "calendar-nav-btn";
 		next.addEventListener("click", () => {
 			MonthData.NextMonthCallack(ctx.sourcePath);
 		});
 
-		headerRow.appendChild(th);
+		const title = document.createElement("div");
+		title.className = "calendar-title";
+		title.textContent = `${month?.MonthText}/${month?.YearText}`;
 
-		const itemsList = Injector
-			?.getInstance(ItemsData)
-			?.GetByInterval(month!.Start, month!.Finish)
-			?? {};
-		console.log(itemsList);
+		nav.appendChild(prev);
+		nav.appendChild(title);
+		nav.appendChild(next);
+		wrapper.appendChild(nav);
 
-		const tbody = table.createTBody();
+		// Calendário
+		const calendarArea = document.createElement("div");
+		calendarArea.className = "calendar-body";
 
-		let day = new Date(month!.Start);
-		while (day <= month!.Finish) {
-			const row = tbody.insertRow();
+		const table = document.createElement("table");
+		table.className = "calendar-table";
 
-			const dayTd = row.insertCell();
-			dayTd.textContent = day.getDate().toString().padStart(2, "0");
+		const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"];
+		const thead = document.createElement("thead");
+		const headerRow = document.createElement("tr");
+		for (const wd of weekdays) {
+			const th = document.createElement("th");
+			th.textContent = wd;
+			headerRow.appendChild(th);
+		}
+		thead.appendChild(headerRow);
+		table.appendChild(thead);
 
-			const itemsTd = row.insertCell();
-			const dayIso = ItemsData.GetIsoString(day);
-			const items = itemsList[dayIso];
-			if (items) {
+		const tbody = document.createElement("tbody");
+		const cursor = new Date(month!.Start);
+		const startDay = cursor.getDay();
+		const totalDays = Math.ceil((month!.Finish.getTime() - month!.Start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+
+		let currentRow = document.createElement("tr");
+		for (let i = 0; i < startDay; i++) {
+			currentRow.appendChild(document.createElement("td"));
+		}
+
+		const today = new Date();
+		for (let i = 0; i < totalDays; i++) {
+			if (cursor.getDay() === 0 && i !== 0) {
+				tbody.appendChild(currentRow);
+				currentRow = document.createElement("tr");
+			}
+
+			const td = document.createElement("td");
+			td.className = "calendar-cell";
+
+			const dayDiv = document.createElement("div");
+			dayDiv.className = "calendar-day";
+			dayDiv.textContent = cursor.getDate().toString();
+
+			if (
+				cursor.getDate() === today.getDate() &&
+				cursor.getMonth() === today.getMonth() &&
+				cursor.getFullYear() === today.getFullYear()
+			) {
+				dayDiv.classList.add("calendar-today");
+			}
+
+			td.appendChild(dayDiv);
+
+			const dayIso = ItemsData.GetIsoString(cursor);
+			const items = itemsList[dayIso] ?? [];
+			/*
+
+			if (items.length > 0) {
+				const ul = document.createElement("ul");
+				ul.className = "calendar-items";
+				for (const item of items) {
+					const li = document.createElement("li");
+					li.textContent = item;
+					ul.appendChild(li);
+				}
+				td.appendChild(ul);
+			}
+			*/
+
+			if (items) {				
+				const itemsTd = document.createElement("div");
 				const itemsValues = Object.values(items);
 				for (const item of itemsValues) {
 					const itemEl = itemsTd.createEl("div");
@@ -63,12 +121,24 @@ export class Renderer {
 							itemEl.textContent += ` [${dates.Type}]`;
 					}
 				}
+				td.appendChild(itemsTd);
 			}
 
-			day.setDate(day.getDate() + 1);
+			currentRow.appendChild(td);
+			cursor.setDate(cursor.getDate() + 1);
 		}
+		tbody.appendChild(currentRow);
+		table.appendChild(tbody);
+		calendarArea.appendChild(table);
+		wrapper.appendChild(calendarArea);
 
-		el.appendChild(table);
+		el.appendChild(wrapper);
+	}
+
+	private static injectCalendarCSS(): void {
+		const style = document.createElement("style");
+		style.textContent = "./styles/calendar.css";
+		document.head.appendChild(style);
 	}
 
 }

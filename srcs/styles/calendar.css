@@ -1,0 +1,80 @@
+.obsidian-calendar-wrapper {
+	font-family: var(--font-text);
+	padding: 8px;
+	border-radius: 8px;
+	border: 1px solid var(--background-modifier-border);
+ }
+ 
+ .calendar-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 6px;
+ }
+ 
+ .calendar-title {
+	font-weight: bold;
+	font-size: 1rem;
+	text-align: center;
+	flex: 1;
+ }
+ 
+ .calendar-nav-btn {
+	background: none;
+	border: none;
+	font-size: 1.2rem;
+	cursor: pointer;
+	padding: 4px 8px;
+ }
+ 
+ .calendar-body {
+	animation: fadeIn 0.2s ease-in;
+ }
+ 
+ @keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+ }
+ 
+ .calendar-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+ }
+ 
+ .calendar-table th,
+ .calendar-table td {
+	padding: 4px;
+	width: 14.2%;
+ }
+ 
+ .calendar-cell {
+	vertical-align: top;
+	border: 1px solid var(--background-modifier-border);
+	padding: 4px;
+	border-radius: 4px;
+ }
+ 
+ .calendar-day {
+	font-weight: bold;
+	margin-bottom: 2px;
+ }
+ 
+ .calendar-today {
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border-radius: 4px;
+	padding: 2px 4px;
+ }
+ 
+ .calendar-items {
+	list-style: none;
+	padding-left: 0;
+	font-size: 0.8em;
+	margin: 4px 0 0 0;
+ }
+ 
+ .calendar-items li {
+	margin: 0;
+ }
+ 
