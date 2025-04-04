@@ -16,7 +16,7 @@ export default class MyPlugin extends Plugin {
 	settings: MyPluginSettings;
 
 	async onload() {
-		Injector.Init(this.app);
+		Injector.Init(this.app, this);
 
 		await this.loadSettings();
 		await Files.LoadFiles();
