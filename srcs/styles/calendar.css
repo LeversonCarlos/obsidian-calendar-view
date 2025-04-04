@@ -2,79 +2,119 @@
 	font-family: var(--font-text);
 	padding: 8px;
 	border-radius: 8px;
-	border: 1px solid var(--background-modifier-border);	
- }
- 
- .calendar-nav {
+	border: 1px solid var(--background-modifier-border);
+}
+
+.calendar-nav {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 6px;
- }
- 
- .calendar-title {
+}
+
+.calendar-title {
 	font-weight: bold;
 	font-size: 1rem;
 	text-align: center;
 	flex: 1;
- }
- 
- .calendar-nav-btn {
+}
+
+.calendar-nav-btn {
 	background: none;
 	border: none;
 	font-size: 1.2rem;
 	cursor: pointer;
 	padding: 4px 8px;
- }
- 
- .calendar-body {
+}
+
+.calendar-body {
 	animation: fadeIn 0.2s ease-in;
- }
- 
- @keyframes fadeIn {
+}
+
+@keyframes fadeIn {
 	from { opacity: 0; }
 	to { opacity: 1; }
- }
- 
- .calendar-table {
+}
+
+.calendar-table {
 	width: 100%;
 	border-collapse: collapse;
 	text-align: center;
- }
- 
- .calendar-table th,
- .calendar-table td {
+}
+
+.calendar-table th,
+.calendar-table td {
 	padding: 4px;
 	width: 14.2%;
- }
- 
- .calendar-cell {
+}
+
+.calendar-cell {
 	vertical-align: top;
 	border: 1px solid var(--background-modifier-border);
 	padding: 4px;
 	border-radius: 4px;
- }
- 
- .calendar-day {
+}
+
+.calendar-day {
 	font-weight: bold;
 	margin-bottom: 2px;
- }
- 
- .calendar-today {
-	background-color: var(--interactive-accent, #007acc);
-	color: var(--text-on-accent, #ffffff);
+}
+
+.calendar-today {
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
 	border-radius: 4px;
 	padding: 2px 4px;
- }
-  
- .calendar-items {
+}
+
+.calendar-items {
 	list-style: none;
 	padding-left: 0;
 	font-size: 0.8em;
 	margin: 4px 0 0 0;
+}
+
+/* Empilhamento visual de imagens dentro do calendário */
+.calendar-items {
+	position: relative;
+	width: 80px;
+	height: 80px;
+	margin: 6px auto 0 auto;
+	padding: 0;
  }
  
  .calendar-items li {
-	margin: 0;
+	list-style: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+ }
+ 
+ .calendar-items li:nth-child(1) {
+	z-index: 3;
+	transform: rotate(-3deg) translate(0px, 0px);
+ }
+ .calendar-items li:nth-child(2) {
+	z-index: 2;
+	transform: rotate(2deg) translate(6px, 6px);
+ }
+ .calendar-items li:nth-child(3) {
+	z-index: 1;
+	transform: rotate(-1deg) translate(12px, 12px);
+ }
+ 
+ .calendar-items img {
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 6px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	cursor: pointer;
+ }
+ 
+ .calendar-items img:hover {
+	transform: scale(1.05);
+	z-index: 10;
  }
  
