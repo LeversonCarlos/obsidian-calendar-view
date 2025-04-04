@@ -97,32 +97,24 @@ export class Renderer {
 
 			const dayIso = ItemsData.GetIsoString(cursor);
 			const items = itemsList[dayIso] ?? [];
-			/*
 
-			if (items.length > 0) {
+			if (items) {
 				const ul = document.createElement("ul");
 				ul.className = "calendar-items";
-				for (const item of items) {
+				const itemsValues = Object.values(items);
+				for (const item of itemsValues) {
 					const li = document.createElement("li");
-					li.textContent = item;
+					const img = document.createElement("img");
+					img.src = item.Image;
+					img.alt = item.Title;
+					for (const dates of item.Dates) {
+						if (ItemsData.GetIsoString(dates.Date) == dayIso)
+							img.addClass(`calendar-item-image-${dates.Type}`);
+					}
+					li.appendChild(img);
 					ul.appendChild(li);
 				}
 				td.appendChild(ul);
-			}
-			*/
-
-			if (items) {
-				const itemsTd = document.createElement("div");
-				const itemsValues = Object.values(items);
-				for (const item of itemsValues) {
-					const itemEl = itemsTd.createEl("div");
-					itemEl.textContent = item.Title;
-					for (const dates of item.Dates) {
-						if (ItemsData.GetIsoString(dates.Date) == dayIso)
-							itemEl.textContent += ` [${dates.Type}]`;
-					}
-				}
-				td.appendChild(itemsTd);
 			}
 
 			currentRow.appendChild(td);

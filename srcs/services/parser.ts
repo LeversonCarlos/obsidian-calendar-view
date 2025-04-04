@@ -20,6 +20,7 @@ export class Parser {
 		item.ID = file.path;
 		item.Title = file.basename;
 		item.Dates = dates;
+		item.Image = frontmatter['Capa'] ?? 'assets/images/cover.png';
 		return item;
 	}
 
