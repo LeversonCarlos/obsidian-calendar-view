@@ -1,6 +1,7 @@
-import { App, MarkdownPostProcessorContext } from "obsidian";
+import { MarkdownPostProcessorContext } from "obsidian";
 import { Injector } from ".";
 import { ItemsData, MonthData } from "../data";
+import calendarCss from "../styles/calendar.css";
 
 export class Renderer {
 
@@ -63,7 +64,7 @@ export class Renderer {
 		const tbody = document.createElement("tbody");
 		const cursor = new Date(month!.Start);
 		const startDay = cursor.getDay();
-		const totalDays = Math.ceil((month!.Finish.getTime() - month!.Start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+		const totalDays = Math.ceil((month!.Finish.getTime() - month!.Start.getTime()) / (1000 * 60 * 60 * 24));
 
 		let currentRow = document.createElement("tr");
 		for (let i = 0; i < startDay; i++) {
@@ -110,7 +111,7 @@ export class Renderer {
 			}
 			*/
 
-			if (items) {				
+			if (items) {
 				const itemsTd = document.createElement("div");
 				const itemsValues = Object.values(items);
 				for (const item of itemsValues) {
@@ -136,8 +137,8 @@ export class Renderer {
 	}
 
 	private static injectCalendarCSS(): void {
-		const style = document.createElement("style");
-		style.textContent = "./styles/calendar.css";
+		const style = document.createElement("style");		
+		style.textContent = calendarCss;
 		document.head.appendChild(style);
 	}
 

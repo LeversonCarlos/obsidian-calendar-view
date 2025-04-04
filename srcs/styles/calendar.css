@@ -61,12 +61,12 @@
  }
  
  .calendar-today {
-	background-color: var(--interactive-accent);
-	color: var(--text-on-accent);
+	background-color: var(--interactive-accent, #007acc);
+	color: var(--text-on-accent, #ffffff);
 	border-radius: 4px;
 	padding: 2px 4px;
  }
- 
+  
  .calendar-items {
 	list-style: none;
 	padding-left: 0;
