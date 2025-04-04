@@ -2,6 +2,7 @@ import { MarkdownPostProcessorContext } from "obsidian";
 import { Injector } from ".";
 import { ItemsData, MonthData } from "../data";
 import calendarCss from "../styles/calendar.css";
+import fallbackImage from "../styles/poster.png";
 
 export class Renderer {
 
@@ -105,7 +106,7 @@ export class Renderer {
 				for (const item of itemsValues) {
 					const li = document.createElement("li");
 					const img = document.createElement("img");
-					img.src = item.Image;
+					img.src = item.Image || fallbackImage;
 					img.alt = item.Title;
 					for (const dates of item.Dates) {
 						if (ItemsData.GetIsoString(dates.Date) == dayIso)

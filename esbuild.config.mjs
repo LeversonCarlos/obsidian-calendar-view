@@ -41,6 +41,7 @@ const context = await esbuild.context({
 	minify: prod,
 	loader: {
 		".css": "text", 
+		".png": "dataurl"
 	},
 });
 
