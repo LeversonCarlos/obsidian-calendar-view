@@ -22,15 +22,38 @@ export class SettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('Title Property')
+			.setName('Title Property')
+			.setDesc('The name of a property in the notes that will be used as the TITLE of the note in the calendar view')
 			.addText(text => text
-				.setPlaceholder('Enter the TITLE property name of the notes')
+				.setPlaceholder('ex: Title, Name, Description')
 				.setValue(this.Settings.TitlePropertyName)
 				.onChange(async (value) => {
 					this.Settings.TitlePropertyName = value;
 					await this.saveSettings();
 				}));
+
+		new Setting(containerEl)
+			.setName('Image Property')
+			.setDesc('The name of a property in the notes that will be used as the IMAGE of the note in the calendar view')
+			.addText(text => text
+				.setPlaceholder('ex: CoverImage, Image, Poster')
+				.setValue(this.Settings.ImagePropertyName)
+				.onChange(async (value) => {
+					this.Settings.ImagePropertyName = value;
+					await this.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName('Dates Property')
+			.setDesc('A coma separated list of property names in the notes that will be used as the DATES of the note in the calendar view')
+			.addText(text => text
+				.setPlaceholder('ex: ReleaseDate, StartDate, ReadDate, WatchDate')
+				.setValue(this.Settings.DatesPropertyName?.join(', ') ?? '')
+				.onChange(async (value) => {
+					this.Settings.DatesPropertyName = value?.split(',')?.map(s => s.trim());
+					await this.saveSettings();
+				}));
+
 	}
 
 }
