@@ -108,6 +108,7 @@ export class Renderer {
 					const img = document.createElement("img");
 					img.src = item.Image || fallbackImage;
 					img.alt = item.Title;
+					img.title = item.Title;					
 					for (const dates of item.Dates) {
 						if (ItemsData.GetIsoString(dates.Date) == dayIso)
 							img.addClass(`calendar-item-image-${dates.Type}`);
