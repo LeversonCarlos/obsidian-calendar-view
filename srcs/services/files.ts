@@ -36,13 +36,13 @@ export class Files {
 			return;
 
 		for (const item of files)
-			this.addCache(item);
+			await this.addCache(item);
 	}
 
-	private static addCache(file: TFile) {
+	private static async addCache(file: TFile) {
 		if (!file)
 			return;
-		const item = Parser.Parse(file);
+		const item = await Parser.Parse(file);
 		if (!item)
 			return;
 		Injector

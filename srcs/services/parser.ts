@@ -4,11 +4,15 @@ import { Injector } from ".";
 
 export class Parser {
 
-	public static Parse(file: TFile | null): ItemModel | null {
+	public static async Parse(file: TFile | null): Promise<ItemModel | null> {
 		if (!file)
 			return null;
 
-		const frontmatter = Parser.GetFrontmatter(file);
+		const app = Injector.getInstance(App);
+		if (!app)
+			return null;
+
+		const frontmatter = Parser.GetFrontmatter(app, file);
 		if (!frontmatter)
 			return null;
 
@@ -20,15 +24,11 @@ export class Parser {
 		item.ID = file.path;
 		item.Title = file.basename;
 		item.Dates = dates;
-		item.Image = frontmatter['Capa'];
+		item.Image = await Parser.GetImage(app, file, frontmatter);
 		return item;
 	}
 
-	private static GetFrontmatter(file: TFile): FrontMatterCache | null {
-		const app = Injector.getInstance(App);
-		if (!app)
-			return null;
-
+	private static GetFrontmatter(app: App, file: TFile): FrontMatterCache | null {
 		const metadata = app
 			?.metadataCache
 			?.getFileCache(file);
@@ -91,6 +91,21 @@ export class Parser {
 		if (!date)
 			return null;
 		return [DateModel.Create(columnName, date)];
+	}
+
+	private static async GetImage(app: App, file: TFile, frontMatter: FrontMatterCache): Promise<string | null> {
+		let imagePath = frontMatter['Capa'];
+		if (imagePath)
+			return imagePath;
+
+		const body = await app.vault.read(file);
+
+		const match = body.match(/^Capa::\s*(.+)$/m);
+		imagePath = match ? match[1].trim() : null;
+		if (imagePath)
+			return imagePath;
+
+		return null;
 	}
 
 }
