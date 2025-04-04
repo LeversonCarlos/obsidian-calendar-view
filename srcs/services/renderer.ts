@@ -6,7 +6,7 @@ import calendarCss from "../styles/calendar.css";
 export class Renderer {
 
 	public static async OnRender(source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext): Promise<any> {
-		Renderer.injectCalendarCSS();
+		Renderer.injectCalendarCss();
 		const id = ctx.sourcePath;
 
 		const month = Injector?.getInstance(MonthData)?.Get(id);
@@ -136,10 +136,15 @@ export class Renderer {
 		el.appendChild(wrapper);
 	}
 
-	private static injectCalendarCSS(): void {
-		const style = document.createElement("style");		
+	private static injectCalendarCss(): void {
+		const existing = document.getElementById("obsidian-calendar-style");
+		if (existing) {
+			existing.remove(); // remove o antigo antes de injetar o novo
+		}
+
+		const style = document.createElement("style");
+		style.id = "obsidian-calendar-style";
 		style.textContent = calendarCss;
 		document.head.appendChild(style);
 	}
-
 }
