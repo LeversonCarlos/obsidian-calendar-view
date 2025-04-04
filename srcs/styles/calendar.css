@@ -1,8 +1,5 @@
 .obsidian-calendar-wrapper {
 	font-family: var(--font-text);
-	padding: 8px;
-	border-radius: 8px;
-	border: 1px solid var(--background-modifier-border);
 }
 
 .calendar-nav {
@@ -10,6 +7,9 @@
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 6px;
+	padding: 8px;
+	border-radius: 8px;
+	border: 1px solid var(--background-modifier-border);
 }
 
 .calendar-title {
@@ -57,14 +57,15 @@
 
 .calendar-day {
 	font-weight: bold;
+	padding: 4px 6px;
 	margin-bottom: 2px;
 }
 
 .calendar-today {
 	background-color: var(--interactive-accent);
 	color: var(--text-on-accent);
-	border-radius: 4px;
-	padding: 2px 4px;
+	border-radius: 4px;	
+	display: inline-block;
 }
 
 .calendar-items {
