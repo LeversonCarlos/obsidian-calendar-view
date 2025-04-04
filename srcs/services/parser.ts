@@ -94,13 +94,16 @@ export class Parser {
 	}
 
 	private static async GetImage(app: App, file: TFile, frontMatter: FrontMatterCache): Promise<string | null> {
-		let imagePath = frontMatter['Capa'];
+		const imageProperty = 'Capa';
+		let imagePath = frontMatter[imageProperty];
 		if (imagePath)
 			return imagePath;
 
 		const body = await app.vault.read(file);
 
-		const match = body.match(/^Capa::\s*(.+)$/m);
+		const pattern = new RegExp(`^${imageProperty}::\\s*(.+)$`, 'm');
+		const match = body.match(pattern);
+
 		imagePath = match ? match[1].trim() : null;
 		if (imagePath)
 			return imagePath;
