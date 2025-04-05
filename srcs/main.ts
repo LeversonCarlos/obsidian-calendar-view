@@ -1,16 +1,17 @@
 import { App, Editor, MarkdownView, Modal, Plugin } from 'obsidian';
 import { CalendarService } from './calendar';
 import { Injector } from './Injector';
+import { IPlugin } from './IPlugin';
 import { ItemCache, ItemService } from './Item';
 import { SettingsService, SettingTab } from './settings';
 import { StylesService } from './styles';
 
-export default class MyPlugin extends Plugin {
+export default class MyPlugin extends Plugin implements IPlugin {
 
 	async onload() {
-		Injector.Init(this.app, this);
-		StylesService.loadStyles();
+		Injector.Init(this);
 
+		StylesService.loadStyles();
 		await SettingsService.loadSettings();
 		await ItemService.LoadFiles();
 

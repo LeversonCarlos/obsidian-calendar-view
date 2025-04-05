@@ -3,8 +3,8 @@ import { IPlugin } from "..";
 
 export class Injector {
 
-	public static Init(app: App, plugin: IPlugin) {
-		Injector.instances.set(App.name, app);
+	public static Init(plugin: IPlugin) {
+		Injector.instances.set(App.name, plugin.app);
 		Injector.instances.set('IPlugin', plugin);
 	}
 
