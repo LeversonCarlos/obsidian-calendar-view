@@ -1,4 +1,4 @@
-import { ItemModel } from "../models";
+import { ItemModel } from "../Item";
 
 export class ItemsData {
 	private _CacheByID: CacheItemType = {};
@@ -103,7 +103,7 @@ export class ItemsData {
 		console.log("CacheByDate:", this._CacheByDate);
 	}
 
-	public static GetIsoString(date: Date | null): string  {
+	public static GetIsoString(date: Date | null): string {
 		if (!date)
 			return "";
 		return date.toISOString().substring(0, 10);

@@ -1,7 +1,7 @@
 import { App, FrontMatterCache, TFile } from "obsidian";
-import { DateModel, ItemModel } from "srcs/models";
-import { SettingsModel } from "srcs/settings";
+import { DateModel, ItemModel } from ".";
 import { Injector } from "../services";
+import { SettingsModel } from "../settings";
 
 export class ItemParser {
 

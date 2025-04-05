@@ -1,5 +1,5 @@
 import { App, Modal } from "obsidian";
-import { ItemModel } from "../models";
+import { ItemModel } from "../Item";
 
 export class PopupService extends Modal {
 	private items: ItemModel[];
