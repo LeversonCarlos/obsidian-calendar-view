@@ -1,13 +1,14 @@
 import { App, MarkdownPostProcessorContext } from "obsidian";
 import { PopupService } from "srcs/popup";
-import { Injector } from ".";
+import { Injector } from "../services";
 import { ItemsData, MonthData } from "../data";
 import fallbackImage from "../styles/poster.png";
 
-export class Renderer {
+export class CalendarService {
 
 	public static async OnRender(source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext): Promise<any> {
 		const id = ctx.sourcePath;
+		console.log("Renderizando o calendário", id);
 
 		const app = Injector?.getInstance(App);
 		const month = Injector?.getInstance(MonthData)?.Get(id);

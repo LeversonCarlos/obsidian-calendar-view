@@ -1,8 +1,9 @@
 import { App, Editor, MarkdownView, Modal, Plugin } from 'obsidian';
 import { ItemsData } from 'srcs/data';
-import { Files, Injector, Renderer } from 'srcs/services';
+import { Files, Injector } from 'srcs/services';
 import { SettingsService, SettingTab } from 'srcs/settings';
 import { StylesService } from 'srcs/styles';
+import { CalendarService } from './calendar';
 
 export default class MyPlugin extends Plugin {
 
@@ -17,7 +18,7 @@ export default class MyPlugin extends Plugin {
 		this.registerEvent(this.app.vault.on('modify', Files.OnModify));
 		this.registerEvent(this.app.vault.on('delete', Files.OnDelete));
 
-		this.registerMarkdownCodeBlockProcessor("calendar-view", Renderer.OnRender);
+		this.registerMarkdownCodeBlockProcessor("calendar-view", CalendarService.OnRender);
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Calendar View', (evt: MouseEvent) => {
@@ -81,7 +82,7 @@ export default class MyPlugin extends Plugin {
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		// this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
-		
+
 	}
 
 	onunload() {
