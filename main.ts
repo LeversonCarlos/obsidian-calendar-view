@@ -2,11 +2,13 @@ import { App, Editor, MarkdownView, Modal, Plugin } from 'obsidian';
 import { ItemsData } from 'srcs/data';
 import { Files, Injector, Renderer } from 'srcs/services';
 import { SettingsService, SettingTab } from 'srcs/settings';
+import { StylesService } from 'srcs/styles';
 
 export default class MyPlugin extends Plugin {
 
 	async onload() {
 		Injector.Init(this.app, this);
+		StylesService.loadStyles();
 
 		await SettingsService.loadSettings();
 		await Files.LoadFiles();
