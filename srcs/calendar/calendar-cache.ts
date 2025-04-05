@@ -1,7 +1,7 @@
 import { App, MarkdownView } from "obsidian";
 import { Injector } from "../Injector";
 
-export class MonthData {
+export class CalendarCache {
 	private _MonthByID: MonthDict = {};
 
 	public Get(id: string | null): MonthType | null {
@@ -71,7 +71,7 @@ export class MonthData {
 
 	public static NextMonthCallack(id: string): void {
 		Injector
-			?.getInstance(MonthData)
+			?.getInstance(CalendarCache)
 			?.NextMonth(id);
 		Injector
 			?.getInstance(App)
@@ -83,7 +83,7 @@ export class MonthData {
 
 	public static PreviousMonthCallack(id: string): void {
 		Injector
-			?.getInstance(MonthData)
+			?.getInstance(CalendarCache)
 			?.PreviousMonth(id);
 		Injector
 			?.getInstance(App)

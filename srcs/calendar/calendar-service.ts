@@ -1,5 +1,5 @@
 import { App, MarkdownPostProcessorContext } from "obsidian";
-import { MonthData } from "../data";
+import { CalendarCache } from ".";
 import { Injector } from "../Injector";
 import { ItemCache } from "../Item";
 import { PopupService } from "../popup";
@@ -12,7 +12,7 @@ export class CalendarService {
 		console.log("Renderizando o calendário", id);
 
 		const app = Injector?.getInstance(App);
-		const month = Injector?.getInstance(MonthData)?.Get(id);
+		const month = Injector?.getInstance(CalendarCache)?.Get(id);
 		const itemsList = Injector?.getInstance(ItemCache)?.GetByInterval(month!.Start, month!.Finish) ?? {};
 
 		// Wrapper principal com estilo
@@ -27,14 +27,14 @@ export class CalendarService {
 		prev.textContent = "←";
 		prev.className = "calendar-nav-btn";
 		prev.addEventListener("click", () => {
-			MonthData.PreviousMonthCallack(ctx.sourcePath);
+			CalendarCache.PreviousMonthCallack(ctx.sourcePath);
 		});
 
 		const next = document.createElement("button");
 		next.textContent = "→";
 		next.className = "calendar-nav-btn";
 		next.addEventListener("click", () => {
-			MonthData.NextMonthCallack(ctx.sourcePath);
+			CalendarCache.NextMonthCallack(ctx.sourcePath);
 		});
 
 		const title = document.createElement("div");
