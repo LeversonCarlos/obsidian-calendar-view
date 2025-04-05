@@ -47,6 +47,13 @@ export class PopupService extends Modal {
 				textContainer.createEl("div", { text: dateText, cls: "item-list-date" });
 			}
 
+			row.addEventListener("click", () => {
+				if (item.ID) {
+					this.app.workspace.openLinkText(item.ID, "", true);
+					this.close();
+				}
+			});
+
 		});
 	}
 
