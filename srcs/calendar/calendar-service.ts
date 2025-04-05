@@ -98,14 +98,17 @@ export class CalendarService {
 
 			td.appendChild(dayDiv);
 
-			const dayIso = ItemCache.GetIsoString(cursor);
-			const items = itemsList[dayIso] ?? [];
+			const day = new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate(), 0, 0, 0, 0);
+			const dayIso = ItemCache.GetIsoString(day);
+			const dayData = itemsList[dayIso] ?? [];
+			const dayItems = Object.values(dayData);
 
-			if (items) {
-				const ul = document.createElement("ul");
-				ul.className = "calendar-items";
-				const itemsValues = Object.values(items);
-				for (const item of itemsValues) {
+			const ul = document.createElement("ul");
+			ul.className = "calendar-items";
+
+			if (dayItems && dayItems.length > 0) {
+
+				for (const item of dayItems) {
 					const li = document.createElement("li");
 					const img = document.createElement("img");
 					img.src = item.Image || fallbackImage;
@@ -120,12 +123,13 @@ export class CalendarService {
 				}
 
 				ul.addEventListener("click", () => {
-					const modal = new PopupService(app, cursor, itemsValues);
+					const modal = new PopupService(app, day, dayItems);
 					modal.open();
 				});
 
-				td.appendChild(ul);
 			}
+
+			td.appendChild(ul);
 
 			currentRow.appendChild(td);
 			cursor.setDate(cursor.getDate() + 1);
