@@ -28,6 +28,8 @@ export class CalendarService {
 		prev.className = "calendar-nav-btn";
 		prev.addEventListener("click", () => {
 			CalendarCache.PreviousMonthCallack(ctx.sourcePath);
+			el.empty();
+			CalendarService.OnRender(source, el, ctx);			
 		});
 
 		const next = document.createElement("button");
@@ -35,6 +37,8 @@ export class CalendarService {
 		next.className = "calendar-nav-btn";
 		next.addEventListener("click", () => {
 			CalendarCache.NextMonthCallack(ctx.sourcePath);
+			el.empty();
+			CalendarService.OnRender(source, el, ctx);			
 		});
 
 		const title = document.createElement("div");

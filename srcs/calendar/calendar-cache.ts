@@ -73,24 +73,24 @@ export class CalendarCache {
 		Injector
 			?.getInstance(CalendarCache)
 			?.NextMonth(id);
-		Injector
-			?.getInstance(App)
-			?.workspace
-			?.getActiveViewOfType(MarkdownView)
-			?.previewMode
-			?.rerender(true);
+		// Injector
+		// 	?.getInstance(App)
+		// 	?.workspace
+		// 	?.getActiveViewOfType(MarkdownView)
+		// 	?.previewMode
+		// 	?.rerender(true);
 	}
 
 	public static PreviousMonthCallack(id: string): void {
 		Injector
 			?.getInstance(CalendarCache)
 			?.PreviousMonth(id);
-		Injector
-			?.getInstance(App)
-			?.workspace
-			?.getActiveViewOfType(MarkdownView)
-			?.previewMode
-			?.rerender(true);
+		// Injector
+		// 	?.getInstance(App)
+		// 	?.workspace
+		// 	?.getActiveViewOfType(MarkdownView)
+		// 	?.previewMode
+		// 	?.rerender(true);
 	}
 
 }
