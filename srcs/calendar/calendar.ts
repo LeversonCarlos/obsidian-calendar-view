@@ -1,7 +1,8 @@
 import { App, MarkdownPostProcessorContext } from "obsidian";
-import { PopupService } from "srcs/popup";
+import { MonthData } from "../data";
+import { ItemCache } from "../Item";
+import { PopupService } from "../popup";
 import { Injector } from "../services";
-import { ItemsData, MonthData } from "../data";
 import fallbackImage from "../styles/poster.png";
 
 export class CalendarService {
@@ -12,7 +13,7 @@ export class CalendarService {
 
 		const app = Injector?.getInstance(App);
 		const month = Injector?.getInstance(MonthData)?.Get(id);
-		const itemsList = Injector?.getInstance(ItemsData)?.GetByInterval(month!.Start, month!.Finish) ?? {};
+		const itemsList = Injector?.getInstance(ItemCache)?.GetByInterval(month!.Start, month!.Finish) ?? {};
 
 		// Wrapper principal com estilo
 		const wrapper = document.createElement("div");
@@ -97,7 +98,7 @@ export class CalendarService {
 
 			td.appendChild(dayDiv);
 
-			const dayIso = ItemsData.GetIsoString(cursor);
+			const dayIso = ItemCache.GetIsoString(cursor);
 			const items = itemsList[dayIso] ?? [];
 
 			if (items) {
@@ -111,7 +112,7 @@ export class CalendarService {
 					img.alt = item.Title;
 					img.title = item.Title;
 					for (const dates of item.Dates) {
-						if (ItemsData.GetIsoString(dates.Date) == dayIso)
+						if (ItemCache.GetIsoString(dates.Date) == dayIso)
 							img.addClass(`calendar-item-image-${dates.Type}`);
 					}
 					li.appendChild(img);

@@ -1,6 +1,6 @@
 import { ItemModel } from "../Item";
 
-export class ItemsData {
+export class ItemCache {
 	private _CacheByID: CacheItemType = {};
 	private _CacheByDate: CacheListType = {};
 
@@ -19,7 +19,7 @@ export class ItemsData {
 		this._CacheByID[item.ID] = item;
 
 		for (const date of item.Dates) {
-			const dateKey = ItemsData.GetIsoString(date.Date);
+			const dateKey = ItemCache.GetIsoString(date.Date);
 			if (!this._CacheByDate[dateKey]) {
 				this._CacheByDate[dateKey] = {};
 			}
@@ -36,7 +36,7 @@ export class ItemsData {
 			return;
 
 		for (const date of itemCache.Dates) {
-			const dateKey = ItemsData.GetIsoString(date.Date);
+			const dateKey = ItemCache.GetIsoString(date.Date);
 
 			const dateCache = this._CacheByDate[dateKey];
 			if (!dateCache)
@@ -63,7 +63,7 @@ export class ItemsData {
 	public GetByDate(date: Date | null): ItemModel[] {
 		if (!date)
 			return [];
-		const dateKey = ItemsData.GetIsoString(date);
+		const dateKey = ItemCache.GetIsoString(date);
 		const itemCache = this._CacheByDate[dateKey];
 		if (!itemCache)
 			return [];
@@ -77,8 +77,8 @@ export class ItemsData {
 		if (!initialDate || !finalDate)
 			return null;
 
-		const initialKey = ItemsData.GetIsoString(initialDate);
-		const finalKey = ItemsData.GetIsoString(finalDate);
+		const initialKey = ItemCache.GetIsoString(initialDate);
+		const finalKey = ItemCache.GetIsoString(finalDate);
 		const result: CacheListType = {};
 
 		for (const dateKey in this._CacheByDate) {

@@ -1,6 +1,5 @@
 import { App, TAbstractFile, TFile } from "obsidian";
-import { ItemParser } from ".";
-import { ItemsData } from "../data";
+import { ItemCache, ItemParser } from ".";
 import { Injector } from "../services";
 
 export class ItemService {
@@ -26,7 +25,7 @@ export class ItemService {
 
 	public static async LoadFiles() {
 		Injector
-			?.getInstance(ItemsData)
+			?.getInstance(ItemCache)
 			?.Clear();
 
 		const files = Injector
@@ -47,7 +46,7 @@ export class ItemService {
 		if (!item)
 			return;
 		Injector
-			?.getInstance(ItemsData)
+			?.getInstance(ItemCache)
 			?.Add(item);
 	}
 
@@ -55,7 +54,7 @@ export class ItemService {
 		if (!file)
 			return;
 		Injector
-			?.getInstance(ItemsData)
+			?.getInstance(ItemCache)
 			?.Remove(file.path);
 	}
 

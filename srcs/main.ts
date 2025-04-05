@@ -1,7 +1,6 @@
 import { App, Editor, MarkdownView, Modal, Plugin } from 'obsidian';
 import { CalendarService } from './calendar';
-import { ItemsData } from './data';
-import { ItemService } from './Item';
+import { ItemCache, ItemService } from './Item';
 import { Injector } from './services';
 import { SettingsService, SettingTab } from './settings';
 import { StylesService } from './styles';
@@ -24,7 +23,7 @@ export default class MyPlugin extends Plugin {
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Calendar View', (evt: MouseEvent) => {
 			Injector
-				?.getInstance(ItemsData)
+				?.getInstance(ItemCache)
 				?.Log();
 		});
 
