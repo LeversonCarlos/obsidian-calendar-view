@@ -1,4 +1,5 @@
-import { MarkdownPostProcessorContext } from "obsidian";
+import { App, MarkdownPostProcessorContext } from "obsidian";
+import { PopupService } from "srcs/popup";
 import { Injector } from ".";
 import { ItemsData, MonthData } from "../data";
 import fallbackImage from "../styles/poster.png";
@@ -8,6 +9,7 @@ export class Renderer {
 	public static async OnRender(source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext): Promise<any> {
 		const id = ctx.sourcePath;
 
+		const app = Injector?.getInstance(App);
 		const month = Injector?.getInstance(MonthData)?.Get(id);
 		const itemsList = Injector?.getInstance(ItemsData)?.GetByInterval(month!.Start, month!.Finish) ?? {};
 
@@ -106,7 +108,7 @@ export class Renderer {
 					const img = document.createElement("img");
 					img.src = item.Image || fallbackImage;
 					img.alt = item.Title;
-					img.title = item.Title;					
+					img.title = item.Title;
 					for (const dates of item.Dates) {
 						if (ItemsData.GetIsoString(dates.Date) == dayIso)
 							img.addClass(`calendar-item-image-${dates.Type}`);
@@ -114,6 +116,12 @@ export class Renderer {
 					li.appendChild(img);
 					ul.appendChild(li);
 				}
+
+				ul.addEventListener("click", () => {
+					const modal = new PopupService(app, itemsValues);
+					modal.open();
+				});
+
 				td.appendChild(ul);
 			}
 
