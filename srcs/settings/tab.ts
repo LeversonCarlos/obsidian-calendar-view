@@ -1,8 +1,7 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
-import { IPlugin } from "srcs";
-import { Injector } from "srcs/services";
-import { SettingsModel } from "./model";
-import { SettingsService } from "./service";
+import { SettingsModel, SettingsService } from ".";
+import { IPlugin } from "..";
+import { Injector } from "../Injector";
 
 export class SettingTab extends PluginSettingTab {
 

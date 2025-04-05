@@ -1,6 +1,6 @@
 import { App, FrontMatterCache, TFile } from "obsidian";
 import { DateModel, ItemModel } from ".";
-import { Injector } from "../services";
+import { Injector } from "../Injector";
 import { SettingsModel } from "../settings";
 
 export class ItemParser {

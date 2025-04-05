@@ -1,5 +1,5 @@
-import { Injector } from "srcs/services";
 import { SettingsModel } from ".";
+import { Injector } from "../Injector";
 
 export class SettingsService {
 

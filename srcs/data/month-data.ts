@@ -1,5 +1,5 @@
 import { App, MarkdownView } from "obsidian";
-import { Injector } from "srcs/services";
+import { Injector } from "../Injector";
 
 export class MonthData {
 	private _MonthByID: MonthDict = {};

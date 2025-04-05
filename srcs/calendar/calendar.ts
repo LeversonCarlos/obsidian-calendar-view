@@ -1,8 +1,8 @@
 import { App, MarkdownPostProcessorContext } from "obsidian";
 import { MonthData } from "../data";
+import { Injector } from "../Injector";
 import { ItemCache } from "../Item";
 import { PopupService } from "../popup";
-import { Injector } from "../services";
 import fallbackImage from "../styles/poster.png";
 
 export class CalendarService {

@@ -1,6 +1,6 @@
 import { App, TAbstractFile, TFile } from "obsidian";
 import { ItemCache, ItemParser } from ".";
-import { Injector } from "../services";
+import { Injector } from "../Injector";
 
 export class ItemService {
 

@@ -1,5 +1,5 @@
 import { App } from "obsidian";
-import { IPlugin } from "srcs";
+import { IPlugin } from "..";
 
 export class Injector {
 

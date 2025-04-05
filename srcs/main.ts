@@ -1,7 +1,7 @@
 import { App, Editor, MarkdownView, Modal, Plugin } from 'obsidian';
 import { CalendarService } from './calendar';
+import { Injector } from './Injector';
 import { ItemCache, ItemService } from './Item';
-import { Injector } from './services';
 import { SettingsService, SettingTab } from './settings';
 import { StylesService } from './styles';
 
