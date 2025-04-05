@@ -1,5 +1,5 @@
 import { App, Modal } from "obsidian";
-import { ItemModel } from "../Item";
+import { ItemCache, ItemModel } from "../Item";
 
 export class PopupService extends Modal {
 
@@ -36,8 +36,15 @@ export class PopupService extends Modal {
 			textContainer.createEl("div", { text: item.Title, cls: "item-list-title" });
 
 			if (item.Dates?.length > 0) {
-				const dateStr = new Date(item.Dates[0].Date).toLocaleDateString(); // ajuste conforme estrutura
-				textContainer.createEl("div", { text: dateStr, cls: "item-list-date" });
+				const dateIso = ItemCache.GetIsoString(this._Date);
+
+				let dateText = "";
+				for (const dates of item.Dates) {
+					if (ItemCache.GetIsoString(dates.Date) == dateIso)
+						dateText += (dateText ? ', ' : '') + dates.Type;
+				}
+
+				textContainer.createEl("div", { text: dateText, cls: "item-list-date" });
 			}
 
 		});
