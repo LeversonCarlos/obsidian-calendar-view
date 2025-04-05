@@ -120,7 +120,7 @@ export class CalendarService {
 				}
 
 				ul.addEventListener("click", () => {
-					const modal = new PopupService(app, itemsValues);
+					const modal = new PopupService(app, cursor, itemsValues);
 					modal.open();
 				});
 

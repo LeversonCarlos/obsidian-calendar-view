@@ -2,12 +2,14 @@ import { App, Modal } from "obsidian";
 import { ItemModel } from "../Item";
 
 export class PopupService extends Modal {
-	private items: ItemModel[];
 
-	constructor(app: App, items: ItemModel[]) {
+	constructor(app: App, date: Date, items: ItemModel[]) {
 		super(app);
-		this.items = items;
+		this._Date = date;
+		this._Items = items;
 	}
+	private _Date: Date;
+	private _Items: ItemModel[];
 
 	onOpen() {
 		const { contentEl } = this;
@@ -18,7 +20,7 @@ export class PopupService extends Modal {
 
 		const list = contentEl.createEl("div", { cls: "item-list-container" });
 
-		this.items.forEach(item => {
+		this._Items.forEach(item => {
 			const row = list.createEl("div", { cls: "item-list-row" });
 
 			// Imagem
