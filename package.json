@@ -4,7 +4,7 @@
 	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
 	"main": "main.js",
 	"scripts": {
-		"scss": "sass srcs/styles/styles.scss dist/styles.css",
+		"scss": "sass srcs/styles/styles.scss styles.css",
 		"tsc": "tsc -noEmit -skipLibCheck",
 		"dev": "node esbuild.config.mjs",
 		"build": "npm run scss npm run tsc && node esbuild.config.mjs production",

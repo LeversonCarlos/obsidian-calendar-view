@@ -1,4 +1,4 @@
-import stylesCss from "../../dist/styles.css";
+import stylesCss from "../../styles.css";
 
 export class StylesService {
 
