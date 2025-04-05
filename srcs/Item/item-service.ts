@@ -1,26 +1,26 @@
 import { App, TAbstractFile, TFile } from "obsidian";
-import { ItemParser } from "srcs/Item";
-import { Injector } from ".";
+import { ItemParser } from ".";
 import { ItemsData } from "../data";
+import { Injector } from "../services";
 
-export class Files {
+export class ItemService {
 
 	public static OnCreate(file: TAbstractFile) {
 		if (file instanceof TFile && file.extension === 'md') {
-			Files.addCache(file);
+			ItemService.addCache(file);
 		}
 	};
 
 	public static OnModify(file: TAbstractFile) {
 		if (file instanceof TFile && file.extension === 'md') {
-			Files.removeCache(file);
-			Files.addCache(file);
+			ItemService.removeCache(file);
+			ItemService.addCache(file);
 		}
 	};
 
 	public static OnDelete(file: TAbstractFile) {
 		if (file instanceof TFile && file.extension === 'md') {
-			Files.removeCache(file);
+			ItemService.removeCache(file);
 		}
 	};
 
@@ -43,7 +43,7 @@ export class Files {
 	private static async addCache(file: TFile) {
 		if (!file)
 			return;
-		const item = await Parser.Parse(file);
+		const item = await ItemParser.Parse(file);
 		if (!item)
 			return;
 		Injector

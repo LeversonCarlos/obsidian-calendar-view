@@ -1,9 +1,10 @@
 import { App, Editor, MarkdownView, Modal, Plugin } from 'obsidian';
-import { ItemsData } from 'srcs/data';
-import { Files, Injector } from 'srcs/services';
-import { SettingsService, SettingTab } from 'srcs/settings';
-import { StylesService } from 'srcs/styles';
 import { CalendarService } from './calendar';
+import { ItemsData } from './data';
+import { ItemService } from './Item';
+import { Injector } from './services';
+import { SettingsService, SettingTab } from './settings';
+import { StylesService } from './styles';
 
 export default class MyPlugin extends Plugin {
 
@@ -12,11 +13,11 @@ export default class MyPlugin extends Plugin {
 		StylesService.loadStyles();
 
 		await SettingsService.loadSettings();
-		await Files.LoadFiles();
+		await ItemService.LoadFiles();
 
-		this.registerEvent(this.app.vault.on('create', Files.OnCreate));
-		this.registerEvent(this.app.vault.on('modify', Files.OnModify));
-		this.registerEvent(this.app.vault.on('delete', Files.OnDelete));
+		this.registerEvent(this.app.vault.on('create', ItemService.OnCreate));
+		this.registerEvent(this.app.vault.on('modify', ItemService.OnModify));
+		this.registerEvent(this.app.vault.on('delete', ItemService.OnDelete));
 
 		this.registerMarkdownCodeBlockProcessor("calendar-view", CalendarService.OnRender);
 
