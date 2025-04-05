@@ -29,7 +29,7 @@ export class CalendarService {
 		prev.addEventListener("click", () => {
 			CalendarCache.PreviousMonthCallack(ctx.sourcePath);
 			el.empty();
-			CalendarService.OnRender(source, el, ctx);			
+			CalendarService.OnRender(source, el, ctx);
 		});
 
 		const next = document.createElement("button");
@@ -38,7 +38,7 @@ export class CalendarService {
 		next.addEventListener("click", () => {
 			CalendarCache.NextMonthCallack(ctx.sourcePath);
 			el.empty();
-			CalendarService.OnRender(source, el, ctx);			
+			CalendarService.OnRender(source, el, ctx);
 		});
 
 		const title = document.createElement("div");
@@ -118,6 +118,7 @@ export class CalendarService {
 					img.src = item.Image || fallbackImage;
 					img.alt = item.Title;
 					img.title = item.Title;
+
 					for (const dates of item.Dates) {
 						if (ItemCache.GetIsoString(dates.Date) == dayIso)
 							img.addClass(`calendar-item-image-${dates.Type}`);
