@@ -1,9 +1,9 @@
 import { App, FrontMatterCache, TFile } from "obsidian";
 import { DateModel, ItemModel } from "srcs/models";
-import { Injector } from ".";
 import { SettingsModel } from "srcs/settings";
+import { Injector } from "../services";
 
-export class Parser {
+export class ItemParser {
 
 	public static async Parse(file: TFile | null): Promise<ItemModel | null> {
 		if (!file)
@@ -13,14 +13,14 @@ export class Parser {
 		if (!app)
 			return null;
 
-		const frontmatter = Parser.GetFrontmatter(app, file);
+		const frontmatter = ItemParser.GetFrontmatter(app, file);
 		if (!frontmatter)
 			return null;
 
 		const settings = Injector
 			?.getInstance(SettingsModel);
 
-		const dates = Parser.GetDates(file, frontmatter, settings);
+		const dates = ItemParser.GetDates(file, frontmatter, settings);
 		if (!dates)
 			return null;
 
@@ -28,7 +28,7 @@ export class Parser {
 		item.ID = file.path;
 		item.Title = file.basename;
 		item.Dates = dates;
-		item.Image = await Parser.GetImage(app, file, frontmatter, settings);
+		item.Image = await ItemParser.GetImage(app, file, frontmatter, settings);
 		return item;
 	}
 
@@ -56,7 +56,7 @@ export class Parser {
 			return null;
 
 		for (const columnName of columnNames) {
-			const columnDates = Parser.GetDatesForColumn(file, frontMatter, columnName);
+			const columnDates = ItemParser.GetDatesForColumn(file, frontMatter, columnName);
 			if (columnDates)
 				dates.push(...columnDates);
 		}

@@ -1,5 +1,6 @@
 import { App, TAbstractFile, TFile } from "obsidian";
-import { Injector, Parser } from ".";
+import { ItemParser } from "srcs/Item";
+import { Injector } from ".";
 import { ItemsData } from "../data";
 
 export class Files {
