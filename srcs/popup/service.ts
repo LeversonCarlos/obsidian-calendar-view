@@ -26,7 +26,10 @@ export class PopupService extends Modal {
 			// Imagem
 			if (item.Image) {
 				const img = row.createEl("img", {
-					attr: { src: item.Image, alt: item.Title },
+					attr: {
+						src: item.Image,
+						alt: item.Title,
+					},
 					cls: "item-list-image"
 				});
 			}
