@@ -6,7 +6,7 @@ import { ItemService } from './Item';
 import { SettingsService, SettingTab } from './settings';
 import { StylesService } from './styles';
 
-export default class MyPlugin extends Plugin implements IPlugin {
+export default class ObsidianCalendarView extends Plugin implements IPlugin {
 
 	async onload() {
 		Injector.Init(this);

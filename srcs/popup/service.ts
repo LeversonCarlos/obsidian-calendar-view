@@ -13,6 +13,7 @@ export class PopupService extends Modal {
 		const { contentEl } = this;
 
 		contentEl.empty();
+		contentEl.className = "obsidian-calendar-view-popup";
 		contentEl.createEl("h2", { text: "Itens Relacionados" });
 
 		const list = contentEl.createEl("div", { cls: "item-list-container" });

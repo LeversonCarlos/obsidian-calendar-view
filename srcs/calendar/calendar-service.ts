@@ -17,7 +17,7 @@ export class CalendarService {
 
 		// Wrapper principal com estilo
 		const wrapper = document.createElement("div");
-		wrapper.className = "obsidian-calendar-wrapper";
+		wrapper.className = "obsidian-calendar-view-wrapper";
 
 		// Navegacao
 		const nav = document.createElement("div");
