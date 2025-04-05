@@ -112,11 +112,11 @@
 			}
 			&:nth-child(2) {
 				z-index: 2;
-				transform: rotate(3deg) translate(6px, 6px);
+				transform: rotate(2deg) translate(12px, 6px); // mais deslocamento lateral
 			}
 			&:nth-child(3) {
 				z-index: 1;
-				transform: rotate(-3deg) translate(-6px, -6px);
+				transform: rotate(-2deg) translate(-12px, 6px); // mais deslocamento lateral
 			}
 		}
 
