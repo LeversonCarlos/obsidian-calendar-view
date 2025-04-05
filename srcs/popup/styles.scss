@@ -11,8 +11,8 @@
 		display: flex;
 		align-items: center;
 		gap: 10px;
-		border-bottom: 1px solid var(--background-modifier-border);
-		padding: 6px 0;
+		border-top: 1px solid var(--background-modifier-border);
+		padding: 10px 0 0 !important;
 
 		img {
 			width: $item-image-size;
