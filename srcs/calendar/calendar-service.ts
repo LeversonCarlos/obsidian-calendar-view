@@ -9,7 +9,6 @@ export class CalendarService {
 
 	public static async OnRender(source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext): Promise<any> {
 		const id = ctx.sourcePath;
-		console.log("Renderizando o calendário", id);
 
 		const app = Injector?.getInstance(App);
 		const month = Injector?.getInstance(CalendarCache)?.Get(id);
