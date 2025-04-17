@@ -10,16 +10,18 @@ export default class ObsidianCalendarView extends Plugin implements IPlugin {
 
 	async onload() {
 		Injector.Init(this);
-
 		StylesService.loadStyles();
 		await SettingsService.loadSettings();
-		await ItemService.LoadFiles();
 
-		this.registerEvent(this.app.vault.on('create', ItemService.OnCreate));
-		this.registerEvent(this.app.vault.on('modify', ItemService.OnModify));
-		this.registerEvent(this.app.vault.on('delete', ItemService.OnDelete));
+		this.app.workspace.onLayoutReady(async () => {
+			await ItemService.LoadFiles();
 
-		this.registerMarkdownCodeBlockProcessor("calendar-view", CalendarService.OnRender);
+			this.registerEvent(this.app.vault.on('create', ItemService.OnCreate));
+			this.registerEvent(this.app.vault.on('modify', ItemService.OnModify));
+			this.registerEvent(this.app.vault.on('delete', ItemService.OnDelete));
+
+			this.registerMarkdownCodeBlockProcessor("calendar-view", CalendarService.OnRender);
+		});
 
 		/*
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Calendar View', (evt: MouseEvent) => {
