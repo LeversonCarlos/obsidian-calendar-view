@@ -8,6 +8,7 @@
 		"tsc": "tsc -noEmit -skipLibCheck",
 		"dev": "node esbuild.config.mjs",
 		"build": "npm run scss && npm run tsc && node esbuild.config.mjs production",
+		"dist": "npm run build && (if not exist dist mkdir dist) && copy /Y main.js dist && copy /Y manifest.json dist && copy /Y styles.css dist",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
 	"keywords": [],
