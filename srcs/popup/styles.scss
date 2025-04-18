@@ -33,4 +33,26 @@
 		font-size: 0.85rem;
 		color: var(--text-muted);
 	}
+
+	@media screen and (max-width: 768px) {
+		$item-image-size: 48px;
+
+		.item-list-row {
+			gap: 6px;
+			padding: 8px 0 0 !important;
+
+			img {
+				width: $item-image-size;
+				height: calc($item-image-size * 1.33);
+			}
+		}
+
+		.item-list-title {
+			font-size: 0.9rem;
+		}
+
+		.item-list-date {
+			font-size: 0.75rem;
+		}
+	}
 }

@@ -60,7 +60,7 @@
 
 	.calendar-day {
 		font-weight: bold;
-		padding: 4px 6px;		
+		padding: 4px 6px;
 	}
 
 	.calendar-today {
@@ -133,6 +133,41 @@
 			display: block;
 			margin: 0 auto;
 			pointer-events: none;
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		.calendar-nav {
+			flex-direction: column;
+			gap: 4px;
+		}
+
+		.calendar-title {
+			font-size: 0.9rem;
+		}
+
+		.calendar-nav-btn {
+			font-size: 1rem;
+			padding: 4px;
+		}
+
+		.calendar-table th,
+		.calendar-table td {
+			padding: 2px;
+			font-size: 0.8em;
+		}
+
+		.calendar-items {
+			width: 38px;
+			height: 38px;
+		}
+
+		.calendar-day {
+			font-size: 0.85rem;
+		}
+
+		.calendar-today {
+			padding: 2px 4px;
 		}
 	}
 }
