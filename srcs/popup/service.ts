@@ -12,11 +12,12 @@ export class PopupService extends Modal {
 	private _Items: ItemModel[];
 
 	onOpen() {
-		const { contentEl } = this;
+		const { contentEl, titleEl } = this;
+
+		titleEl.setText(this._Date.toLocaleDateString()); 
 
 		contentEl.empty();
 		contentEl.className = "obsidian-calendar-view-popup";
-		contentEl.createEl("h2", { text: this._Date.toLocaleDateString() });
 
 		const list = contentEl.createEl("div", { cls: "item-list-container" });
 
