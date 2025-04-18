@@ -37,6 +37,11 @@
 	@media screen and (max-width: 768px) {
 		$item-image-size: 48px;
 
+		.item-list-container {
+			padding-left: 8px !important;
+			padding-right: 8px !important;
+		}
+
 		.item-list-row {
 			gap: 6px;
 			padding: 8px 0 0 !important;
