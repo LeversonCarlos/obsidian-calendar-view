@@ -8,10 +8,13 @@
 # npm
 node_modules
 
-# Don't include the compiled main.js file in the repo.
-# They should be uploaded to GitHub releases instead.
-main.js
-styles.css
+# Ignore compiled files only in the root
+/main.js
+/styles.css
+
+# Do not ignore built files inside dist/
+!dist/main.js
+!dist/styles.css
 
 # Exclude sourcemaps
 *.map
@@ -22,5 +25,4 @@ data.json
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store
 
-dist
 package-lock.json
