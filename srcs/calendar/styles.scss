@@ -41,13 +41,14 @@
 
 	.calendar-table {
 		width: 100% !important;
+		table-layout: fixed;
 		border-collapse: collapse;
 		text-align: center;
 
 		th,
 		td {
 			padding: 4px;
-			width: 14.2%;
+			width: calc( 100% / 7 );
 		}
 	}
 
