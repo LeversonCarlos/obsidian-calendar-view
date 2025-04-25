@@ -8,7 +8,7 @@
 		"tsc": "tsc -noEmit -skipLibCheck",
 		"dev": "node esbuild.config.mjs",
 		"build": "npm run scss && npm run tsc && node esbuild.config.mjs production",
-		"dist": "npm run build && (if not exist dist mkdir dist) && copy /Y main.js dist && copy /Y manifest.json dist && copy /Y styles.css dist",
+		"dist": "npm run build && cpy main.js manifest.json styles.css dist/",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
 	"keywords": [
@@ -24,6 +24,7 @@
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
 		"builtin-modules": "3.3.0",
+		"cpy-cli": "^5.0.0",
 		"esbuild": "0.17.3",
 		"obsidian": "latest",
 		"sass": "^1.86.3",
