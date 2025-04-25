@@ -13,7 +13,7 @@ To release a new version of the plugin, follow these steps:
 3. **Commit the changes**  
    ```bash
    git add .
-   git commit -m "Version bump to 1.0.1"
+   git commit -m "Version bump"
    ```
 
 4. **Tag the release**  

@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-calendar-view",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Add a visual, interactive calendar to your notes — with daily thumbnails for any file that references that date.",
 	"main": "main.js",
 	"scripts": {
