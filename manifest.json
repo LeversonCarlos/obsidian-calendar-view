@@ -3,9 +3,8 @@
 	"name": "Calendar View",
 	"version": "1.0.2",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Add a visual, interactive calendar to your notes — with daily thumbnails for any file that references that date.",
+	"author": "Leverson Carlos",
+	"authorUrl": "https://github.com/LeversonCarlos/obsidian-calendar-view",	
 	"isDesktopOnly": false
 }

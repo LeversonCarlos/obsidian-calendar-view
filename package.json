@@ -1,7 +1,7 @@
 {
 	"name": "obsidian-calendar-view",
 	"version": "1.0.2",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Add a visual, interactive calendar to your notes — with daily thumbnails for any file that references that date.",
 	"main": "main.js",
 	"scripts": {
 		"scss": "sass srcs/styles/styles.scss styles.css",
@@ -11,7 +11,7 @@
 		"dist": "npm run build && (if not exist dist mkdir dist) && copy /Y main.js dist && copy /Y manifest.json dist && copy /Y styles.css dist",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
-	"keywords": [],
+	"keywords": ["obsidian", "calendar", "plugin", "notes"],
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
