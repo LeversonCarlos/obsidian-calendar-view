@@ -11,7 +11,12 @@
 		"dist": "npm run build && (if not exist dist mkdir dist) && copy /Y main.js dist && copy /Y manifest.json dist && copy /Y styles.css dist",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
-	"keywords": ["obsidian", "calendar", "plugin", "notes"],
+	"keywords": [
+		"obsidian",
+		"calendar",
+		"plugin",
+		"notes"
+	],
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
