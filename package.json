@@ -17,7 +17,7 @@
 		"plugin",
 		"notes"
 	],
-	"author": "",
+	"author": "Leverson Carlos",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
